@@ -6,5 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'projeto';
+  isRecipeComponentVisible = true;
+  isShoppingListVisible = false;
+
+
+  selectSection(section) {
+    if(section === 'recipe') {
+      this.isRecipeComponentVisible = true;
+      this.isShoppingListVisible = false;
+    } else {
+      this.isShoppingListVisible = true;
+      this.isRecipeComponentVisible = false;
+    }
+
+  }
 }

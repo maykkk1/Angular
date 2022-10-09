@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Output() onSectionSelected = new EventEmitter<string>()
 
   constructor() { }
 
@@ -13,5 +14,9 @@ export class HeaderComponent implements OnInit {
   }
 
   collapsed = true;
+
+  selectSection(section: string) {
+    this.onSectionSelected.emit(section)
+  }
 
 }

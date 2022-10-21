@@ -1,13 +1,15 @@
-import { EventEmitter, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 import { Ingredient } from "../shared/Ingredient.model";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
 import { Recipe } from "./recipe.model";
 
 @Injectable()
 export class RecipeService {
-    selectedRecipe = new EventEmitter<Recipe>();
+    selectedRecipe = new Subject<Recipe>();
     private recipes: Recipe[] = [
         new Recipe(
+            0,
             'Whopper',
             'Icônico para todo mundo!',
             '../../assets/images/receitas/whopper-thumb.png', 
@@ -17,6 +19,7 @@ export class RecipeService {
                 new Ingredient('cheese', 2)
             ]),
         new Recipe(
+            1,
             'CBK', 
             'Novo sanduíche feito com peito de frango empanado.', 
             '../../assets/images/receitas/CBK-thumb-cupom-m-d.png',
@@ -36,5 +39,10 @@ export class RecipeService {
 
     addIngredientsToShoppingList(ingredients: Ingredient[]) {
         this.shoppingListService.addIngredientsList(ingredients);
+    }
+
+    getRecipeById(id: number) {
+        const index = this.getRecipes().findIndex(recipe => recipe.id == id)
+        return this.getRecipes()[index]
     }
 }

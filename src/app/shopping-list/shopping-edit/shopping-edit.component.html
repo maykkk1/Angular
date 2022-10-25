@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <form>
+        <form (ngSubmit)="onAddItem(f)" #f="ngForm">
             <div class="row">
                 <div class="col-sm-5 form-group">
                     <label for="name">Name</label>
@@ -8,7 +8,9 @@
                     type="text"
                     id="name" 
                     class="form-control"
-                    #ingredientName
+                    name="name"
+                    ngModel
+                    required
                     >
                 </div>
                 <div class="col-sm-2 form-group">
@@ -16,15 +18,33 @@
                     <input type="number" 
                     id="amount" 
                     class="form-control"
-                    #ingredientAmount
+                    name="amount"
+                    ngModel
+                    required
+                    [pattern]="'^[1-9]+[0-9]*$'"
                     >
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <button (click)="addIngredient()" style="margin-right: 5px;" class="btn btn-success" type="button">Add</button>
-                    <button style="margin-right: 5px;" class="btn btn-danger" type="button">Delete</button>
-                    <button style="margin-right: 5px;" class="btn btn-primary" type="button">Clear</button>
+                    <button 
+                        style="margin-right: 5px;" 
+                        class="btn btn-success" 
+                        [disabled]="!f.valid" 
+                        type="submit"> {{ editMode ? 'Update' : 'Add'  }} </button>
+                    <button 
+                        *ngIf="editMode"
+                        style="margin-right: 5px;" 
+                        class="btn btn-danger" 
+                        type="button"
+                        (click)="onDeleteItem()"
+                        >Delete</button>
+                    <button 
+                        style="margin-right: 5px;" 
+                        class="btn btn-primary" 
+                        type="button"
+                        (click)="clearForm()"
+                        >Clear</button>
                 </div>
             </div>
         </form>

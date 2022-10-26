@@ -9,7 +9,7 @@ import { RecipeService } from '../../recipe.service';
   styleUrls: ['./recipe-item.component.css']
 })
 export class RecipeItemComponent implements OnInit {
-
+  @Input() index: number;
   @Input() recipeData: Recipe;
 
   constructor(private recipeService: RecipeService,
@@ -17,6 +17,5 @@ export class RecipeItemComponent implements OnInit {
               private route: ActivatedRoute
     ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

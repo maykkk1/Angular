@@ -7,9 +7,9 @@ import { Recipe } from "./recipe.model";
 @Injectable()
 export class RecipeService {
     selectedRecipe = new Subject<Recipe>();
+    recipeChanged = new Subject<void>();
     private recipes: Recipe[] = [
         new Recipe(
-            0,
             'Whopper',
             'Icônico para todo mundo!',
             '../../assets/images/receitas/whopper-thumb.png', 
@@ -19,7 +19,6 @@ export class RecipeService {
                 new Ingredient('cheese', 2)
             ]),
         new Recipe(
-            1,
             'CBK', 
             'Novo sanduíche feito com peito de frango empanado.', 
             '../../assets/images/receitas/CBK-thumb-cupom-m-d.png',
@@ -41,8 +40,22 @@ export class RecipeService {
         this.shoppingListService.addIngredientsList(ingredients);
     }
 
-    getRecipeById(id: number) {
-        const index = this.getRecipes().findIndex(recipe => recipe.id == id)
+    getRecipeById(index: number) {
         return this.getRecipes()[index]
+    }
+
+    addRecipe(recipe: Recipe) {
+        this.recipes.push(recipe);
+        this.recipeChanged.next();
+    }
+
+    updateRecipe(index: number, newRecipe: Recipe) {
+        this.recipes[index] = newRecipe;
+        this.recipeChanged.next();
+    }
+
+    deleteRecipe(index: number) {
+        this.recipes.splice(index, 1)
+        this.recipeChanged.next();
     }
 }
